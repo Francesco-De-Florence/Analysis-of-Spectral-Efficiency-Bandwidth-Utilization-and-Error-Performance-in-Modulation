@@ -1,0 +1,2 @@
+# Analysis-of-Spectral-Efficiency-Bandwidth-Utilization-and-Error-Performance-in-Modulation
+A comparative study of 4PSK, 8PSK, 16PSK, and 32PSK modulation schemes evaluating their spectral efficiency, bandwidth utilization, and error performance. The analysis highlights the trade-off between higher data rates and increased bit error rate as modulation order increases, providing insights for efficient digital communication system design.
