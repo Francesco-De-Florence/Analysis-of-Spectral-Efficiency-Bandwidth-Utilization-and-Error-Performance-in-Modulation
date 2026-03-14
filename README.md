@@ -1,138 +1,111 @@
-Comparative Analysis of Spectral Efficiency, Bandwidth Utilization, and Error Performance in 4PSK, 8PSK, 16PSK, and 32PSK Modulation Schemes
-Chapter 1: Introduction
-Digital modulation techniques are foundational to modern communication systems, enabling the transmission of digital data across analog channels.1 In an era marked by an insatiable demand for higher data rates and efficient use of limited bandwidth, the selection and optimization of these modulation methods have become paramount.2 The performance of a communication system, in terms of how efficiently it utilizes the frequency spectrum, the amount of bandwidth it requires, and its resilience to noise, is intrinsically linked to the chosen modulation technique.4 This necessitates a thorough understanding of the characteristics and trade-offs associated with various digital modulation schemes.
-Phase Shift Keying (PSK) stands out as a widely adopted digital modulation technique, particularly in wireless communication scenarios.1 In PSK, data is conveyed by altering the phase of a constant frequency carrier wave.1 This method employs a discrete number of phase states, with each state representing a unique sequence of binary digits or symbols.1 The family of PSK modulation encompasses several variants, including Binary PSK (BPSK), Quadrature PSK (QPSK or 4PSK), 8PSK, 16PSK, and 32PSK, each distinguished by the number of distinct phase states utilized for encoding information.1 Higher-order PSK schemes, which employ a greater number of phase states, possess the theoretical capability to transmit more bits per symbol, thereby offering the potential for enhanced spectral efficiency.7 The inherent power efficiency and favorable bandwidth efficiency of PSK compared to other modulation techniques like Amplitude Shift Keying (ASK) and Frequency Shift Keying (FSK) contribute to its widespread use.1
-This thesis focuses on a comparative analysis of four prominent PSK modulation schemes: 4PSK, 8PSK, 16PSK, and 32PSK. These schemes represent a spectrum of modulation orders, each presenting a unique balance between data rate, bandwidth efficiency, and error performance. A comprehensive understanding of these trade-offs is essential for making informed decisions when designing communication systems with specific requirements for data throughput, available bandwidth, and acceptable levels of error.4 The Python implementation developed for this analysis provides a practical means to evaluate and compare the performance characteristics of these schemes under controlled conditions.
-The primary objective of this thesis is to conduct a comprehensive comparative analysis of 4PSK, 8PSK, 16PSK, and 32PSK modulation schemes. This analysis will evaluate their spectral efficiency, bandwidth utilization, and error performance through a combination of theoretical examination and simulation using Python. The goal is to provide clear insights into the respective advantages and disadvantages of each scheme for various digital communication applications. The specific objectives include:
-●	To theoretically analyze the principles of 4PSK, 8PSK, 16PSK, and 32PSK modulation.
-●	To implement these modulation schemes in Python.
-●	To simulate the transmission and reception of signals modulated using these schemes under Additive White Gaussian Noise (AWGN) channel conditions.
-●	To compare the spectral efficiency of these schemes.
-●	To compare the bandwidth utilization of these schemes.
-●	To compare the Bit Error Rate (BER) performance of these schemes at different Signal-to-Noise Ratio (SNR) levels.
-●	To discuss the trade-offs between spectral efficiency, bandwidth utilization, and error performance.
-●	To identify suitable application scenarios for each modulation scheme based on their performance characteristics.
-The structure of this thesis is as follows: Chapter 2 provides a detailed theoretical background of Phase Shift Keying modulation. Chapter 3 describes the implementation of the selected PSK modulation schemes in Python. Chapter 4 presents a comparative analysis of their spectral efficiency. Chapter 5 focuses on the comparative analysis of bandwidth utilization. Chapter 6 details the comparative analysis of error performance. Chapter 7 discusses the findings and explores potential application scenarios for each scheme. Finally, Chapter 8 concludes the thesis and suggests directions for future work.
-Chapter 2: Theoretical Background of Phase Shift Keying Modulation
-Phase Shift Keying (PSK) is a digital modulation technique that transmits information by modulating the phase of a constant frequency carrier wave.1 The modulation process involves varying the phase of the carrier signal in accordance with the digital data being transmitted.2 In essence, PSK utilizes a finite set of discrete phase values, where each specific phase corresponds to a unique sequence of binary bits, forming a symbol.1 At the receiver, a demodulator, specifically designed for the symbol set used by the modulator, determines the phase of the received signal and maps it back to the corresponding symbol, thereby recovering the original digital data.1 PSK modulation schemes are conveniently visualized using constellation diagrams, which depict the possible signal states as points arranged with uniform angular spacing around a circle in the complex plane.1
-The fundamental principle underlying PSK is the direct association of digital data with the phase of the carrier signal. For an M-ary PSK scheme (where M is the number of phase states), each symbol can represent log2(M) bits. This relationship dictates the data-carrying capacity of the modulation scheme; a larger number of phase states allows for encoding more bits per symbol.8
-2.1 Constellation Diagrams of PSK Variants
-2.1.1 4PSK (QPSK)
-Quadrature Phase-Shift Keying (QPSK), also known as 4PSK, employs four distinct phase shifts to encode data.1 These phases are typically separated by 90 degrees, commonly at 45°, 135°, 225°, and 315°.1 Each of these four phases represents a unique combination of two binary bits, thus allowing QPSK to encode two bits per symbol.1 Conceptually, QPSK can be viewed as two independent Binary PSK (BPSK) signals, each carrying one bit, modulated onto carrier waves that are 90 degrees out of phase with each other.1 Often, Gray coding is used in mapping bit pairs to these phase states to minimize the number of bit errors that occur when noise causes a transition to an adjacent symbol in the constellation.1 QPSK achieves a doubling of the data rate compared to BPSK within the same bandwidth or can maintain the same data rate while halving the required bandwidth.1 This improved spectral efficiency makes QPSK a significant advancement over BPSK.13
-2.1.2 8PSK
-8-Phase Shift Keying (8PSK) utilizes eight distinct phase shifts to represent digital data.9 These eight phases are equally spaced at 45-degree intervals around the constellation diagram.9 With eight possible phase states (2<sup>3</sup> = 8), each symbol in 8PSK carries three bits of information.9 This increase in the number of bits per symbol directly translates to a higher bandwidth efficiency compared to QPSK and BPSK.9 However, the closer proximity of the constellation points in 8PSK (45° separation) compared to QPSK (90° separation) makes it more susceptible to noise and interference.9 While 8PSK offers improved spectral efficiency by encoding more bits per symbol, the reduced angular separation between phase states increases the likelihood of misinterpreting the received signal in the presence of noise.9
-2.1.3 16PSK
-16-Phase Shift Keying (16PSK) employs sixteen distinct phase shifts, typically spaced 22.5 degrees apart, to encode data.14 In 16PSK, four binary bits are grouped together to form a symbol, and each of the 16 possible 4-bit combinations is mapped to a unique phase shift.14 The minimum bandwidth required for 16PSK is theoretically one-fourth of the bit rate.15 By encoding four bits per symbol, 16PSK achieves a spectral efficiency double that of QPSK.16 However, this increased efficiency comes at the cost of a significantly reduced phase separation between adjacent constellation points (22.5°), making 16PSK considerably more sensitive to noise and phase impairments on the communication channel.15 The system can only tolerate a small phase shift before errors occur, highlighting the trade-off between spectral efficiency and robustness to noise.15
-2.1.4 32PSK
-32-Phase Shift Keying (32PSK) utilizes thirty-two distinct phase shifts, spaced 11.25 degrees apart, to encode digital data.16 In this modulation scheme, five bits of information are encoded into each transmitted symbol (2<sup>5</sup> = 32).16 Among the four PSK variants analyzed, 32PSK offers the highest theoretical spectral efficiency, capable of transmitting five bits per second per Hertz of bandwidth.16 However, the extremely small angular separation between adjacent phase states (11.25°) renders 32PSK exceptionally vulnerable to noise.17 Achieving acceptable error rates with 32PSK necessitates a very high Signal-to-Noise Ratio (SNR) in the communication channel.15 The practical application of 32PSK is often limited to scenarios where channel conditions are exceptionally good, such as in fiber optic communication or short-range links with minimal noise.2
-2.2 Mathematical Representation of Modulated Signals
-The general mathematical representation of a PSK modulated signal can be given by:
-s(t) = A cos(2πf_c t + θ_i)
-where:
-●	A is the amplitude of the carrier wave.
-●	f_c is the frequency of the carrier wave.
-●	t is time.
-●	θ_i is the phase shift corresponding to the i-th symbol, where i = 0, 1,..., M-1, and M is the modulation order (number of phase states).
-For M-PSK, the phase shifts are typically defined as:
-θ_i = (2πi / M) + φ
-where φ is an initial reference phase (often set to 0).
-Specifically, for the PSK schemes under consideration:
-●	4PSK: M = 4, and the phase shifts can be π/4, 3π/4, 5π/4, 7π/4.
-●	8PSK: M = 8, and the phase shifts can be 0, π/4, π/2, 3π/4, π, 5π/4, 3π/2, 7π/4.
-●	16PSK: M = 16, and the phase shifts can be π/16, 3π/16, 5π/16,..., 31π/16.
-●	32PSK: M = 32, and the phase shifts can be π/32, 3π/32, 5π/32,..., 63π/32.
-These mathematical representations form the basis for both the theoretical analysis and the implementation of these modulation schemes in the Python code.
-Chapter 3: Implementation of PSK Modulation Schemes in Python
-The comparative analysis of the PSK modulation schemes was facilitated by a Python-based implementation, leveraging several key libraries within the Google Colaboratory environment. The numpy library provided essential tools for numerical computations, including array manipulation and mathematical functions. matplotlib was utilized for generating visualizations, such as constellation diagrams and performance plots. The scipy library, specifically the special module, was employed to access the complementary error function (erfc), which is crucial for approximating the theoretical Bit Error Rate (BER) using the Q-function. Finally, pandas was used to create and display a summary table of the key performance metrics. The choice of Google Colab as the development environment offered several advantages, including ease of access, pre-installed libraries, and the capability for GPU acceleration if more computationally intensive simulations were required.
-The Python code was structured around a central class, PSKModulation, which encapsulated the functionalities for modulation, noise addition, demodulation, and simulation of the transmission process for a given modulation order (M). Additionally, a suite of analysis functions was implemented to calculate and compare the spectral efficiency, bandwidth utilization, and error performance of the different PSK schemes.
-3.1 Key Functions and Classes
-3.1.1 PSKModulation Class
-●	__init__(self, M): This constructor initializes the PSKModulation object with the modulation order M. It calculates the number of bits per symbol (k = int(np.log2(M))) and calls the _generate_constellation method to create the set of constellation points for the specified M-PSK scheme.
-●	_generate_constellation(self): This private method calculates the complex constellation points for M-PSK. It generates an array of M equally spaced phase values between 0 and 2π and then uses the formula np.exp(1j * phases) to create the corresponding complex numbers representing the constellation points on the unit circle.
-●	plot_constellation(self, ax=None): This method visualizes the constellation diagram for the PSK scheme. It plots the real and imaginary components of the constellation points using matplotlib.pyplot.scatter. It also includes a unit circle for reference and annotates each constellation point with its corresponding binary label.
-●	modulate(self, bit_sequence): This method takes a binary bit sequence as input and maps it to a sequence of complex symbols according to the M-PSK constellation. It first pads the bit sequence to ensure its length is a multiple of k (bits per symbol). Then, it reshapes the bit sequence into groups of k bits, converts these groups to decimal indices, and uses these indices to select the corresponding constellation points.
-●	add_noise(self, symbols, SNR_dB): This method adds Additive White Gaussian Noise (AWGN) to the modulated complex symbols. It takes the modulated symbols and the desired Signal-to-Noise Ratio (SNR) in dB as input. It converts the SNR from dB to a linear scale and calculates the required noise power. Complex Gaussian noise is then generated using np.random.normal and added to the modulated symbols.
-●	demodulate(self, received_symbols): This method demodulates the received complex symbols. For each received symbol, it calculates the Euclidean distance to every point in the constellation and selects the index of the closest constellation point. This index is then converted back to its corresponding binary bit sequence.
-●	simulate_transmission(self, num_bits, SNR_dB): This method simulates the complete transmission and reception process. It generates a random bit sequence of a specified length, modulates it, adds noise at a given SNR, demodulates the noisy symbols, and then calculates the Bit Error Rate (BER) by comparing the transmitted and received bit sequences.
-3.1.2 Analysis Functions
-●	theoretical_spectral_efficiency(M): This function calculates the theoretical spectral efficiency for an M-PSK scheme using the formula np.log2(M).
-●	calculate_bandwidth(symbol_rate, roll_off=0.5): This function calculates the required bandwidth given the symbol rate and a roll-off factor (defaulting to 0.5). The formula used is symbol_rate * (1 + roll_off).
-●	calculate_symbol_rate(bit_rate, M): This function calculates the symbol rate for a given bit rate and modulation order M using the formula bit_rate / np.log2(M).
-●	theoretical_BER_MPSK(M, SNR_dB): This function calculates the theoretical Bit Error Rate (BER) for M-PSK in an AWGN channel using an approximate formula involving the Q-function, which is implemented using the complementary error function (scipy.special.erfc).
-●	compare_spectral_efficiency(): This function compares the theoretical spectral efficiency of 4PSK, 8PSK, 16PSK, and 32PSK by generating a bar plot using matplotlib.pyplot.
-●	compare_bandwidth_requirements(bit_rate=1e6, roll_off=0.5): This function compares the bandwidth requirements of the different PSK schemes for a fixed bit rate (defaulting to 1 Mbps) and roll-off factor (defaulting to 0.5). It generates a figure with two subplots: one showing the absolute bandwidth requirements and the other showing the percentage reduction in bandwidth compared to 4PSK.
-●	compare_BER_performance(SNR_dB_range=np.arange(0, 25, 0.5), num_bits=100000): This function compares the BER performance of the different PSK schemes. It calculates the theoretical BER for a range of SNR values and also performs simulations to obtain empirical BER values. Both theoretical curves and simulation points are plotted on a semi-logarithmic scale.
-●	plot_constellation_diagrams(): This function generates and displays the constellation diagrams for 4PSK, 8PSK, 16PSK, and 32PSK in a 2x2 subplot layout.
-●	analyze_SNR_requirements(target_BER=1e-4): This function numerically estimates the Signal-to-Noise Ratio (SNR) in dB required to achieve a target Bit Error Rate (BER) of 10^-4 for each PSK scheme using a bisection search method on the theoretical BER formula.
-●	create_summary_table(): This function calculates key performance metrics (spectral efficiency, bandwidth for a fixed bit rate, and SNR required for a target BER) for each PSK scheme and creates a pandas.DataFrame to present these metrics in a tabular format.
-●	visualize_application_scenarios(): This function generates a scatter plot that visualizes potential application scenarios for each PSK scheme based on their spectral efficiency and the SNR required to achieve a BER of 10^-4.
-●	run_complete_analysis(): This function orchestrates the execution of all the analysis functions, saves the generated figures, prints the summary table, and offers to download the results in a Colab environment.
-3.2 Simulation Parameters and Environment
-The simulations were conducted within the Google Colaboratory environment, which provides a convenient platform for running Python code with access to necessary libraries. The Bit Error Rate (BER) performance was evaluated over a Signal-to-Noise Ratio (SNR) range from 0 to 24.5 dB with a step of 0.5 dB for theoretical calculations and at selected SNR points (0, 4, 8, 12, 16, 20, 24 dB) for simulations to balance accuracy and computational time. For each simulation point, a bit sequence of 100,000 bits was transmitted to obtain a statistically significant BER estimate. A roll-off factor of 0.5 was used in the bandwidth calculations, a common value in practice that represents a compromise between bandwidth efficiency and the complexity of the pulse shaping filters. The use of Google Colab facilitated the execution of these simulations and the generation of the required plots and tables.
-Chapter 4: Comparative Analysis of Spectral Efficiency
-Spectral efficiency is a critical metric in digital communications, defined as the number of bits transmitted per second per Hertz of bandwidth (bits/s/Hz).5 It quantifies how effectively a modulation scheme utilizes the available frequency spectrum. In the context of M-PSK modulation, the theoretical spectral efficiency, assuming an ideal Nyquist bandwidth (where the bandwidth is equal to the symbol rate), is given by log2(M) bits/s/Hz.5
-Applying this formula to the PSK schemes under consideration yields the following theoretical spectral efficiencies:
-●	4PSK (M=4): Spectral efficiency = log2(4) = 2 bits/s/Hz.4
-●	8PSK (M=8): Spectral efficiency = log2(8) = 3 bits/s/Hz.9
-●	16PSK (M=16): Spectral efficiency = log2(16) = 4 bits/s/Hz.15
-●	32PSK (M=32): Spectral efficiency = log2(32) = 5 bits/s/Hz.16
-The theoretical spectral efficiency exhibits a direct relationship with the logarithm (base 2) of the modulation order (M). Each time the number of phase states doubles, the spectral efficiency increases by 1 bit/s/Hz.5 This logarithmic increase underscores the potential of higher-order PSK schemes to transmit more data within a given bandwidth.
-The Python code implemented a function, compare_spectral_efficiency(), which calculates and visualizes these theoretical spectral efficiency values for each PSK scheme using a bar plot. The simulation results, as depicted in the generated plot, directly align with these theoretical calculations, as the code inherently uses the definition of spectral efficiency for M-PSK.
-The implications of spectral efficiency are particularly significant for systems operating under bandwidth constraints, such as wireless communication networks.2 A higher spectral efficiency allows for the transmission of a greater amount of data over a fixed bandwidth, which is crucial for meeting the ever-increasing demands for data throughput.2 However, it is important to note that this gain in spectral efficiency often comes at the cost of other performance metrics, notably error performance. As the modulation order increases to achieve higher spectral efficiency, the constellation points in the signal space become closer together, making the system more susceptible to noise and requiring a higher Signal-to-Noise Ratio (SNR) to maintain a desired Bit Error Rate (BER).3 This fundamental trade-off between spectral efficiency and power efficiency (in terms of BER at a given SNR) is a key consideration in the selection of an appropriate modulation scheme for a specific application.5
-Chapter 5: Comparative Analysis of Bandwidth Utilization
-The bandwidth required to transmit a digital signal is closely related to its symbol rate. According to the Nyquist criterion, the minimum theoretical bandwidth for baseband signaling is half the symbol rate. For passband signaling schemes like PSK, the bandwidth is often approximated as equal to the symbol rate.5 The symbol rate (Rs) is determined by the bit rate (Rb) and the number of bits encoded per symbol (k), where k = log2(M). The relationship is given by Rs = Rb / k.8 Consequently, the bandwidth (B) can be approximated as B ≈ Rs = Rb / log2(M). This relationship indicates that for a fixed bit rate, higher-order PSK schemes, which encode more bits per symbol, will have a lower symbol rate and thus require a smaller bandwidth.4
-The Python code includes a function, calculate_symbol_rate(bit_rate, M), to compute the symbol rate and calculate_bandwidth(symbol_rate, roll_off=0.5) to determine the bandwidth, incorporating a roll-off factor. The roll-off factor is a practical parameter that accounts for the non-ideal nature of real-world filters used for pulse shaping, which inevitably occupy more bandwidth than the theoretical minimum.8 A common value for the roll-off factor is 0.5, which was used in the simulations.
-The compare_bandwidth_requirements() function in the code calculates and plots the bandwidth requirements for a fixed bit rate of 1 Mbps for each of the four PSK schemes. The results, presented as a bar plot, illustrate the inverse relationship between the modulation order and the required bandwidth. As the modulation order increases from 4 to 32, the bandwidth required for transmitting the same bit rate decreases. For instance, 4PSK, which encodes 2 bits per symbol, has a higher symbol rate and thus requires more bandwidth compared to 32PSK, which encodes 5 bits per symbol for the same bit rate. The plot also shows the percentage reduction in bandwidth compared to 4PSK, further emphasizing the bandwidth efficiency of higher-order PSK.
-The trade-off between bandwidth efficiency and modulation order is a crucial consideration in communication system design. While higher modulation orders allow for transmitting more bits within a given bandwidth, they also lead to increased system complexity and a greater susceptibility to noise, potentially resulting in poorer error performance.3 The choice of the roll-off factor also plays a role in bandwidth utilization. A smaller roll-off factor can lead to better bandwidth efficiency, but it typically requires more complex filters to minimize inter-symbol interference.8 Inter-symbol interference occurs when the tail of one transmitted symbol interferes with subsequent symbols, complicating the demodulation process.13 Therefore, the selection of the roll-off factor involves a trade-off between bandwidth efficiency and the complexity of the system's filtering and equalization requirements.
-Chapter 6: Comparative Analysis of Error Performance
-The error performance of a digital modulation scheme is typically quantified by its Bit Error Rate (BER), which represents the probability of a bit being incorrectly received. For M-PSK modulation in an Additive White Gaussian Noise (AWGN) channel, the theoretical BER can be approximated by the formula:
-Pb ≈ (2/log2(M)) * Q(√(2*log2(M)*SNR_linear*sin(π/M)^2)) 9
-where M is the modulation order, SNR_linear is the Signal-to-Noise Ratio in linear scale, and Q(x) is the Q-function, which can be related to the complementary error function (erfc). This formula reveals that for a given SNR, higher values of M generally result in a higher BER.5 This degradation in error performance is attributed to the closer spacing of constellation points in higher-order PSK schemes. As the number of phase states increases, the Euclidean distance between adjacent constellation points decreases, making it more likely that noise will cause a received symbol to be incorrectly decoded as a neighboring symbol.5 The term sin(π/M) in the argument of the Q-function decreases as M increases, further contributing to the higher BER at a fixed SNR.
-The Python code includes the function theoretical_BER_MPSK(M, SNR_dB) to calculate this theoretical BER. Additionally, the compare_BER_performance() function simulates the transmission and reception process for each PSK scheme over a range of SNR values and plots both the theoretical and simulated BER curves. The generated plots clearly demonstrate that for a given BER target, higher-order PSK schemes require a higher SNR. For instance, to achieve a BER of 10^-4, 32PSK necessitates a significantly higher SNR compared to 4PSK. This is also evident from the results of the analyze_SNR_requirements() function, which estimates the required SNR for a target BER of 10^-4 for each scheme.
-The impact of modulation order on error probability is a fundamental consideration in communication system design. Increasing the modulation order enhances spectral efficiency and bandwidth efficiency, allowing for higher data rates. However, this comes at the cost of increased susceptibility to noise, leading to a higher probability of errors at a given SNR.3 Consequently, a trade-off must be made between efficiency and reliability, depending on the specific characteristics of the communication channel and the requirements of the application. Applications demanding high reliability, such as critical data transmission or communication over noisy channels, might favor lower-order modulation schemes despite their lower data rates. Conversely, applications prioritizing high throughput in environments with good channel conditions might opt for higher-order modulation schemes, accepting the need for a higher SNR to maintain an acceptable BER.3
-Chapter 7: Discussion and Application Scenarios
-The comparative analysis conducted in the preceding chapters has highlighted the inherent trade-offs between spectral efficiency, bandwidth utilization, and error performance for 4PSK, 8PSK, 16PSK, and 32PSK modulation schemes. Higher modulation orders, such as 16PSK and 32PSK, offer superior spectral efficiency and bandwidth efficiency, enabling the transmission of more data within a given bandwidth. However, this advantage is accompanied by a significant degradation in error performance, requiring higher Signal-to-Noise Ratios (SNRs) to achieve the same Bit Error Rate (BER) as lower-order modulation schemes like 4PSK and 8PSK.
-System designers face the challenge of selecting the most appropriate modulation scheme based on the specific requirements of their application and the characteristics of the communication channel. The "sweet spot" for a particular modulation scheme is heavily influenced by factors such as the available bandwidth, the expected SNR, and the desired data rate and reliability. A system operating in an environment with a high SNR can potentially leverage the high spectral efficiency of 32PSK to achieve very high data rates. Conversely, a system operating in a low SNR environment might be compelled to use the more robust 4PSK, sacrificing data rate for improved reliability.
-The visualization generated by the visualize_application_scenarios() function provides a graphical representation of these trade-offs by plotting the spectral efficiency against the required SNR for a BER of 10^-4 for each PSK scheme. This plot can help in identifying potential application areas where each scheme might be most suitable.
-Based on the analysis and the research material, the suitability of each PSK scheme for different communication applications can be considered as follows:
-●	4PSK (QPSK): With a spectral efficiency of 2 bits/s/Hz, QPSK offers a good balance between efficiency and error performance.1 It is widely employed in various communication systems, including satellite communication, wireless LANs (Wi-Fi), and mobile communication systems such as 5G control channels.4 Its robustness in low signal-to-noise environments makes it a versatile choice.3
-●	8PSK: Providing a spectral efficiency of 3 bits/s/Hz, 8PSK offers improved data rates compared to QPSK but exhibits a higher sensitivity to noise.9 It finds applications in satellite communication systems, digital broadcasting, and high-speed wireless applications where the SNR is reasonably good.2
-●	16PSK: Achieving a spectral efficiency of 4 bits/s/Hz, 16PSK further increases the data rate but is significantly more susceptible to noise.14 Its use is typically limited to applications with high SNR, such as some cable TV systems or high-speed urban broadband access.2
-●	32PSK: With the highest spectral efficiency among the analyzed schemes at 5 bits/s/Hz, 32PSK requires a very high SNR, making it less common in practical applications.17 It might be suitable for fiber optic communication or short-range links where exceptionally good channel conditions prevail.2
-The selection of a PSK modulation scheme ultimately involves a careful consideration of the trade-off between achieving higher data rates through increased spectral efficiency and maintaining acceptable error rates under the given channel conditions. Lower-order PSK schemes offer greater robustness, while higher-order PSK schemes provide better bandwidth utilization.
-Chapter 8: Conclusion and Future Work
-This thesis has presented a comprehensive comparative analysis of 4PSK, 8PSK, 16PSK, and 32PSK modulation schemes, evaluating their spectral efficiency, bandwidth utilization, and error performance through theoretical analysis and Python-based simulations. The key findings indicate a clear trend: as the modulation order increases, the spectral efficiency and bandwidth efficiency improve, allowing for higher data rates. However, this improvement comes at the cost of a significant degradation in error performance, necessitating higher Signal-to-Noise Ratios to maintain a desired Bit Error Rate.
-The theoretical spectral efficiencies were found to be 2, 3, 4, and 5 bits/s/Hz for 4PSK, 8PSK, 16PSK, and 32PSK, respectively. Bandwidth utilization analysis showed that for a fixed bit rate, higher-order PSK schemes require less bandwidth. However, the error performance analysis, through both theoretical calculations and simulations, demonstrated that higher-order PSK schemes exhibit a higher Bit Error Rate at the same SNR compared to lower-order schemes. For instance, achieving a BER of 10^-4 requires progressively higher SNRs as the modulation order increases from 4PSK to 32PSK.
-The choice of an appropriate PSK modulation scheme is a critical decision in communication system design, requiring a careful balance between the desired data rate, the available bandwidth, and the acceptable level of error. Lower-order schemes like 4PSK are more robust and suitable for noisy channels or applications prioritizing reliability, while higher-order schemes like 16PSK and 32PSK offer greater efficiency in bandwidth-limited scenarios with favorable channel conditions.
-Future research could explore the performance of these PSK schemes under more complex and realistic channel conditions, such as fading channels. Investigating the impact of incorporating error correction codes, such as LDPC or Turbo codes, on the overall system performance when using these modulation schemes would also be valuable.12 Furthermore, an analysis of the implementation complexity and power consumption associated with each modulation scheme could provide additional insights for practical system design. Finally, exploring adaptive modulation techniques, where the modulation order is dynamically adjusted based on the prevailing channel conditions, could offer a promising avenue for optimizing system performance in real-time.
-Key Table: Summary of Performance Metrics
-Metric	4PSK	8PSK	16PSK	32PSK
-Spectral Efficiency (bits/s/Hz)	2	3	4	5
-Bandwidth Efficiency (for fixed bit rate)	Highest	Higher	Lower	Lowest
-Required SNR for BER = 10^-4 (dB)	(From Simulation)	(From Simulation)	(From Simulation)	(From Simulation)
-Works cited
-1.	Phase-shift keying - Wikipedia, accessed May 8, 2025, https://en.wikipedia.org/wiki/Phase-shift_keying
-2.	What Is Phase-Shift Keying (PSK)? - ITU Online IT Training, accessed May 8, 2025, https://www.ituonline.com/tech-definitions/what-is-phase-shift-keying-psk/
-3.	Modulation Schemes: Moving Digital Data With Analog Signals - EE Times, accessed May 8, 2025, https://www.eetimes.com/modulation-schemes-moving-digital-data-with-analog-signals/
-4.	Phase Shift Keying & π/4 -Quadrature Phase Shift Keying | PPT - SlideShare, accessed May 8, 2025, https://www.slideshare.net/slideshow/phase-shift-keying-4-quadrature-phase-shift-keying/65943211
-5.	Phase Shift Keying (PSK) | PDF | Data Transmission | Digital Technology - Scribd, accessed May 8, 2025, https://www.scribd.com/doc/121200465/PSK-Presentation
-6.	en.wikipedia.org, accessed May 8, 2025, https://en.wikipedia.org/wiki/Phase-shift_keying#:~:text=Phase%2Dshift%20keying%20(PSK),LANs%2C%20RFID%20and%20Bluetooth%20communication.
-7.	Phase Shift Keying (PSK) : Types and Its Applications - ElProCus, accessed May 8, 2025, https://www.elprocus.com/phase-shift-keying-psk-types-and-its-applications/
-8.	2.13: Phase Shift Keying Modulation - Engineering LibreTexts, accessed May 8, 2025, https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/Microwave_and_RF_Design_I_-_Radio_Systems_(Steer)/02%3A_Modulation/2.13%3A_Phase_Shift_Keying_Modulation
-9.	Understanding 8-PSK Modulation: Principles, Truth Table, and ..., accessed May 8, 2025, https://rahsoft.com/2025/02/28/understanding-8-psk-modulation-principles-truth-table-and-bandwidth-efficiency/
-10.	Phase Shift Keying in Digital Communication - Tutorialspoint, accessed May 8, 2025, https://www.tutorialspoint.com/digital_communication/digital_communication_phase_shift_keying.htm
-11.	Quadrature Phase Shift Keying : Circuit Diagram & Advantages - ElProCus, accessed May 8, 2025, https://www.elprocus.com/quadrature-phase-shift-keying-definition-with-circuit-diagram/
-12.	Bit mapping for 8PSK - Signal Processing Stack Exchange, accessed May 8, 2025, https://dsp.stackexchange.com/questions/95222/bit-mapping-for-8psk
-13.	Digital Phase Modulation: BPSK, QPSK, DQPSK | Radio Frequency ..., accessed May 8, 2025, https://www.allaboutcircuits.com/textbook/radio-frequency-analysis-design/radio-frequency-modulation/digital-phase-modulation-bpsk-qpsk-dqpsk/
-14.	Digital Modulation Techniques | GeeksforGeeks, accessed May 8, 2025, https://www.geeksforgeeks.org/digital-modulation-techniques/
-15.	16 PSK | PDF - Scribd, accessed May 8, 2025, https://www.scribd.com/presentation/424729868/16-PSK
-16.	Telecomms Principles - Digital Modulation (Part One) - TechnologyUK, accessed May 8, 2025, https://www.technologyuk.net/telecommunications/telecom-principles/digital-modulation-part-one.shtml
-17.	(PDF) Offset Phase Shift Keying Modulation in Multiple-Input ..., accessed May 8, 2025, https://www.researchgate.net/publication/276486363_Offset_Phase_Shift_Keying_Modulation_in_Multiple-Input_Multiple-Output_Spatial_Multiplexing
-18.	Spectral efficiency - Wikipedia, accessed May 8, 2025, https://en.wikipedia.org/wiki/Spectral_efficiency
-19.	www.csg.uzh.ch, accessed May 8, 2025, https://www.csg.uzh.ch/csg/dam/jcr:09d9f441-e3e3-451a-be80-fac69efff190/UnderstandingModernDigitalModulationTechniques.pdf
-20.	Spectral Efficiency Limits and Modulation/Detection Techniques for DWDM Systems - Stanford Electrical Engineering, accessed May 8, 2025, https://ee.stanford.edu/~jmk/pubs/jstqe.spect.eff.pdf
-21.	Why do we ever use low-order modulation schemes? - Signal Processing Stack Exchange, accessed May 8, 2025, https://dsp.stackexchange.com/questions/89748/why-do-we-ever-use-low-order-modulation-schemes
-22.	Principles of Digital Modulation - Wireless@ICTP, accessed May 8, 2025, http://wireless.ictp.it/school_2001/lectures/fitton/digital_mod.pdf
-23.	Modulation Schemes for Satellite Communications | Keysight Blogs, accessed May 8, 2025, https://www.keysight.com/blogs/en/tech/rfmw/2020/08/24/modulation-schemes-for-satellite-communications
-24.	Advantages and Disadvantages of ASK, FSK, PSK, BPSK, QPSK ..., accessed May 8, 2025, https://soukacatv998.wordpress.com/2019/07/08/advantages-and-disadvantages-of-ask-fsk-psk-bpsk-qpsk-mpsk-and-qam-soukacatv-com/
-25.	A Survey on Robust Modulation Requirements for the Next Generation Personal Satellite Communications - Frontiers, accessed May 8, 2025, https://www.frontiersin.org/journals/communications-and-networks/articles/10.3389/frcmn.2022.850781/full
+# Comparative Analysis of Spectral Efficiency, Bandwidth Utilization, and Error Performance in 4PSK, 8PSK, 16PSK, and 32PSK Modulation Schemes
+
+## Introduction
+Digital modulation techniques play a fundamental role in modern communication systems by enabling reliable transmission of digital data over analog communication channels. With the rapid growth of wireless networks, satellite communication, and broadband services, efficient utilization of the available frequency spectrum has become a critical design objective. Performance metrics such as **spectral efficiency**, **bandwidth utilization**, and **error performance** are therefore essential when evaluating digital modulation techniques.
+
+Among various digital modulation methods, **Phase Shift Keying (PSK)** is widely used due to its power efficiency and effective bandwidth utilization. In PSK modulation, information is encoded by varying the **phase of a carrier signal** while keeping its amplitude constant. Each unique phase state represents a digital symbol that corresponds to a specific bit sequence.
+
+The PSK family includes several modulation schemes such as **BPSK, QPSK (4PSK), 8PSK, 16PSK, and 32PSK**, which differ in the number of phase states used to represent data. Increasing the modulation order allows more bits to be transmitted per symbol, improving spectral efficiency. However, this also reduces the angular separation between constellation points, making the system more susceptible to noise and increasing the **Bit Error Rate (BER)**.
+
+This project focuses on a **comparative analysis of four PSK modulation schemes: 4PSK, 8PSK, 16PSK, and 32PSK**. These schemes represent increasing modulation orders and demonstrate the fundamental trade-off between **data rate, bandwidth efficiency, and reliability**.
+
+The analysis is performed through **theoretical evaluation and Python-based simulation** in an **Additive White Gaussian Noise (AWGN) channel** environment.
+
+---
+
+## Objectives
+The main objectives of this project are:
+
+- Analyze the theoretical principles of **4PSK, 8PSK, 16PSK, and 32PSK** modulation.
+- Implement these modulation schemes using **Python**.
+- Simulate signal transmission in an **AWGN channel**.
+- Compare **spectral efficiency** of different PSK schemes.
+- Evaluate **bandwidth utilization** for a fixed bit rate.
+- Analyze **Bit Error Rate (BER) performance** across different SNR levels.
+- Identify the trade-offs between efficiency, bandwidth, and reliability.
+- Determine suitable **application scenarios** for each modulation scheme.
+
+---
+
+## Key Concept
+
+### Spectral Efficiency
+Spectral efficiency indicates how efficiently a communication system uses bandwidth and is defined as:
+
+\[
+\eta = \log_2(M) \quad \text{bits/s/Hz}
+\]
+
+Where:
+
+- \( M \) = Modulation order
+
+| Modulation | Bits per Symbol | Spectral Efficiency |
+|------------|----------------|--------------------|
+| 4PSK | 2 | 2 bits/s/Hz |
+| 8PSK | 3 | 3 bits/s/Hz |
+| 16PSK | 4 | 4 bits/s/Hz |
+| 32PSK | 5 | 5 bits/s/Hz |
+
+Higher modulation order increases spectral efficiency but reduces noise tolerance.
+
+---
+
+## Simulation Environment
+
+The implementation was developed using **Python** in the **Google Colab** environment with the following libraries:
+
+- **NumPy** – numerical computation
+- **Matplotlib** – visualization and performance plots
+- **SciPy** – theoretical BER calculations
+- **Pandas** – performance comparison tables
+
+The simulation evaluates:
+
+- Constellation diagrams
+- Spectral efficiency
+- Bandwidth requirements
+- BER vs SNR performance
+
+---
+
+## Key Findings
+
+- Higher-order PSK schemes **increase spectral efficiency**.
+- Higher modulation order **reduces required bandwidth for a fixed bit rate**.
+- However, **BER increases significantly with modulation order**.
+- Achieving reliable communication with **16PSK and 32PSK requires higher SNR**.
+
+Therefore, communication system designers must carefully balance:
+
+- **Data rate**
+- **Bandwidth availability**
+- **Channel noise conditions**
+
+---
+
+## Application Scenarios
+
+| Modulation | Typical Applications |
+|-------------|---------------------|
+| 4PSK (QPSK) | Satellite communication, WiFi, mobile networks |
+| 8PSK | Digital broadcasting, satellite links |
+| 16PSK | High-speed broadband systems |
+| 32PSK | Optical communication or high-SNR short-range links |
+
+---
+
+## Conclusion
+
+This project demonstrates the fundamental **trade-off between spectral efficiency and error performance** in PSK modulation schemes. While higher-order PSK techniques provide better bandwidth efficiency, they require significantly higher **Signal-to-Noise Ratio (SNR)** to maintain acceptable **Bit Error Rate (BER)**.
+
+The results highlight the importance of selecting an appropriate modulation scheme based on **channel conditions, bandwidth constraints, and system reliability requirements**.
+
+---
+
+## References
+Key references used in this project include academic resources and technical documentation on digital communication and PSK modulation.
+
+- Phase Shift Keying – Wikipedia  
+- Digital Communication Tutorials  
+- IEEE communication system references
